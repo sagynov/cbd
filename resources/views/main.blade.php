@@ -6,7 +6,8 @@
                 <div class="bg-gray-100 shadow rounded-lg">
                     <div class="p-4 text-sm font-bold capitalize text-center">{{ $product->category->name }}</div>
                     <div class="bg-white h-full rounded-lg">
-                        <a href="{{ route('product.show', $product->slug) }}">
+                        <a href="{{ route('product.show', $product->slug) }}" class="h-full flex flex-col justify-between">
+                            <div class="flex flex-col gap-2">
                             <img x-data="{
                                 isHovered: false,
                                 init() {
@@ -14,9 +15,19 @@
                                     this.$el.addEventListener('mouseleave', () => this.isHovered = false);
                                 }
                             }" x-bind:src="isHovered ? '{{ $product->images[1] }}' : '{{ $product->images[0] }}'" alt="{{ $product->name }}" class="w-full h-48 object-cover">
-                            <div class="p-4">
-                                <h2 class="text-lg font-bold capitalize">{{ $product->name }}</h2>
-                                <p class="text-lg text-center font-bold">{{ Number::format($product->price).' ₸' }}</p>
+                                <div class="px-4 flex flex-col gap-4">
+                                    <h2 class="text-lg capitalize">{{ $product->name }}</h2>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-4">
+                                <div class="px-4 flex flex-col gap-2">
+                                    <p class="text-lg font-bold">{{ Number::format($product->price).' ₸' }}</p>
+                                </div>
+                                <div class="flex justify-center py-4 px-4">
+                                    <x-cbd-button class="w-full">
+                                        Купить
+                                    </x-cbd-button>
+                                </div>
                             </div>
                         </a>
                     </div>

@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Models\Menu;
 use Illuminate\View\Component;
 use Illuminate\View\View;
 
@@ -12,6 +13,10 @@ class CbdLayout extends Component
      */
     public function render(): View
     {
-        return view('layouts.cbd-app');
+        $menus = Menu::all();
+        $mainMenu = $menus->where('slug', 'main-menu')->first();    
+        $footerMenu = $menus->where('slug', 'footer-menu')->first();
+
+        return view('layouts.cbd-app', compact('mainMenu', 'footerMenu'));
     }
 }

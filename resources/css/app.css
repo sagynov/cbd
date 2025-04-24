@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    --icons-thickness: 10%;
+    --icons-round: round;
+}
+svg.icon {
+    stroke-width: var(--icons-thickness);
+    display: block;
+    stroke-linecap: var(--icons-round);
+    stroke-linejoin: var(--icons-round);
+    font-size: 1em;
+    line-height: 1;
+    overflow: visible;
+}
+svg.fill {
+    stroke: none;
+    fill: inherit;
+}
