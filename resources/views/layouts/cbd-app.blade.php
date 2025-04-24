@@ -17,9 +17,10 @@
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
             <nav class="bg-white shadow">
-                <div class="flex justify-between items-center p-4">
+                <div class="flex justify-between items-center p-4 sm:px-8">
                     <div>
                         <x-application-logo />
+                    </div>
                 </div>
             </nav>
             <!-- Page Content -->
