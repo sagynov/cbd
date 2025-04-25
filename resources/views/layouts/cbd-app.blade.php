@@ -16,7 +16,7 @@
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
-            <nav class="bg-white shadow">
+            <nav class="bg-white shadow sticky top-0 z-50">
                 <div class="flex justify-between items-center p-4 sm:px-8">
                     <div>
                         <x-application-logo />

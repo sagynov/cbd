@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Banner;
 use App\Models\Category;
 use App\Models\Menu;
 use App\Models\Product;
@@ -13,6 +14,7 @@ class MainController extends Controller
     {
         $categories = Category::all();
         $products = Product::with('category')->get();
-        return view('main', compact('categories', 'products'));
+        $banners = Banner::all();
+        return view('main', compact('categories', 'products', 'banners'));
     }
 }

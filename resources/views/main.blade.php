@@ -1,4 +1,7 @@
 <x-cbd-layout>
+    <div>
+        <x-carousel :items="$banners" />
+    </div>
     <div class="py-12">
         <div class="p-4 sm:p-8">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
