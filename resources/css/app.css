@@ -3,9 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import '../../node_modules/slick-carousel/slick/slick.css';
-@import '../../node_modules/slick-carousel/slick/slick-theme.css';
-
 :root {
     --icons-thickness: 10%;
     --icons-round: round;

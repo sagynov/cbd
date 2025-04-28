@@ -9,12 +9,12 @@
     <div class="py-12">
         <div class="px-4 sm:px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div class="slick-slide">
+                
                 @foreach($products as $product)
                         <x-product-item :product="$product" />
                     </div>
                 @endforeach
-                </div>
+                
             </div>
         </div>
     </div>
