@@ -13,6 +13,8 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <link rel="stylesheet" href="{{ asset('assets/slick/slick.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/slick/slick-theme.css') }}">
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
@@ -49,52 +51,9 @@
                 {{ $slot }}
             </main>
 
-            <div>
-                <img src="{{ asset('images/bottom.jpg') }}" class="w-full h-full object-cover">
-            </div>
-
-            <footer class="px-8 py-12">
-                <div class="grid grid-cols-2 gap-8">
-                    {{-- First column --}}
-                    <div>
-                        <div class="text-lg font-bold">STAY CONNECTED</div>
-                        <div class="mb-4">
-                            <form action="/subscribe" method="get" class="relative">
-                                <input type="text" class="w-full h-[35px] rounded-full border-none bg-white pl-4 outline-none focus:border-none focus:ring-0" placeholder="Enter your email">
-                                <x-icon-arrow-long-right class="absolute right-4 top-1/2 -translate-y-1/2" />
-                            </form>
-                        </div>
-                        <div class="flex items-center gap-4">
-                            <div class="flex flex-col gap-4">
-                                <div class="text-lg font-bold">{{ $footerMenu->name }}</div>
-                                <div class="flex flex-col gap-4">
-                                    @foreach ($footerMenu->items as $key => $item)
-                                        <a href="{{ $item }}">{{ $key }}</a>
-                                    @endforeach
-                                </div>
-                            </div>
-                            
-                            
-                        </div>
-                    </div>
-                    {{-- Second column --}}
-                    <div>
-                        <div class="text-lg font-bold mb-4">Social</div>
-                        <div class="flex items-center gap-6">
-                            <a href="#">
-                                <x-icon-instagram />
-                            </a>
-                            <a href="#">
-                                <x-icon-facebook />
-                            </a>
-                            <a href="#">
-                                <x-icon-twitter />
-                            </a>
-                            
-                        </div>
-                    </div>
-                </div>
-            </footer>
+            @include('layouts.footer')
         </div>
+        <script src="{{ asset('assets/jquery/jquery.js') }}"></script>
+        <script src="{{ asset('assets/slick/slick.js') }}"></script>
     </body>
 </html>

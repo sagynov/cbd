@@ -1,0 +1,9 @@
+<svg aria-hidden="true" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" width="15" height="15" style="display: flex; flex-direction: row; margin-inline-end: 3.5px;">
+	    <defs>
+		    <linearGradient id="yotpo_stars_gradient_0.10292941747753048">
+		        <stop offset="100%" stop-color="#e7721b"></stop>
+		        <stop stop-opacity="1" offset="100%" stop-color="#FFFFFF"></stop>
+			</linearGradient>
+		</defs>
+		<path style="pointer-events: none;" d="M9 14.118L14.562 17.475L13.086 11.148L18 6.891L11.529 6.342L9 0.375L6.471 6.342L0 6.891L4.914 11.148L3.438 17.475L9 14.118Z" stroke="#e7721b" fill="url('#yotpo_stars_gradient_0.10292941747753048')"></path>
+	</svg>

@@ -1,39 +1,30 @@
 <x-cbd-layout>
     <div>
         <x-carousel :items="$banners" />
+        <div class="grid grid-cols-5 gap-4 sm:px-8 px-4 py-6 bg-white shadow">
+            <div class="marquee__line">
+                <img src="{{ asset('images/Intouch.svg') }}" alt="marquee" class="h-8">
+            </div>
+            <div class="marquee__line">
+                <img src="{{ asset('images/Medium.svg') }}" alt="marquee" class="w-full h-8">
+            </div>
+            <div class="marquee__line">
+                <img src="{{ asset('images/NewBeauty.svg') }}" alt="marquee" class="h-8">
+            </div>
+            <div class="marquee__line">
+                <img src="{{ asset('images/Forbes_Logo.svg') }}" alt="marquee" class="h-8">
+            </div>
+            <div class="marquee__line">
+                <img src="{{ asset('images/USA_Today_Logo_2.svg') }}" alt="marquee" class="h-8">
+            </div>
+        </div>
     </div>
     <div class="py-12">
         <div class="p-4 sm:p-8">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
             @foreach($products as $product)
-                <div class="bg-gray-100 shadow rounded-lg">
-                    <div class="p-4 text-sm font-bold capitalize text-center">{{ $product->category->name }}</div>
-                    <div class="bg-white h-full rounded-lg">
-                        <a href="{{ route('product.show', $product->slug) }}" class="h-full flex flex-col justify-between">
-                            <div class="flex flex-col gap-2">
-                            <img x-data="{
-                                isHovered: false,
-                                init() {
-                                    this.$el.addEventListener('mouseenter', () => this.isHovered = true);
-                                    this.$el.addEventListener('mouseleave', () => this.isHovered = false);
-                                }
-                            }" x-bind:src="isHovered ? '{{ $product->images[1] }}' : '{{ $product->images[0] }}'" alt="{{ $product->name }}" class="w-full h-48 object-cover">
-                                <div class="px-4 flex flex-col gap-4">
-                                    <h2 class="text-lg capitalize">{{ $product->name }}</h2>
-                                </div>
-                            </div>
-                            <div class="flex flex-col gap-4">
-                                <div class="px-4 flex flex-col gap-2">
-                                    <p class="text-lg font-bold">{{ Number::format($product->price).' ₸' }}</p>
-                                </div>
-                                <div class="flex justify-center py-4 px-4">
-                                    <x-cbd-button class="w-full">
-                                        Купить
-                                    </x-cbd-button>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+                <div class="bg-white">
+                    <x-product-item :product="$product" />
                 </div>
             @endforeach
         </div>
@@ -45,12 +36,17 @@
                 @foreach ($categories as $category)
                     <a href="{{ route('category.show', $category->slug) }}" class="bg-gray-100 max-w-[430px] h-[150px] p-4 bg-cover bg-center flex flex-col justify-end" style="background-image: url({{ $category->image }})">
                         <div class="flex flex justify-between text-white items-center">
-                            <h2 class="text-lg font-bold capitalize">{{ $category->name }}</h2>
-                            <div>-></div>
+                            <h2 class="text-4xl capitalize">{{ $category->name }}</h2>
+                            <div><x-icon-arrow-long-right class="w-10 h-10 stroke-white fill-white" /></div>
                         </div>
                     </a>
                 @endforeach
             </div>
+        </div>
+    </div>
+    <div class="py-12">
+        <div>
+            <img src="{{ asset('images/bottom.jpg') }}" class="w-full h-full object-cover">
         </div>
     </div>
 </x-cbd-layout>
