@@ -12,7 +12,6 @@
                 
                 @foreach($products as $product)
                         <x-product-item :product="$product" />
-                    </div>
                 @endforeach
                 
             </div>

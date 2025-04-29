@@ -3,7 +3,7 @@
         <x-carousel :items="$banners" />
         <div class="grid grid-cols-5 gap-4 sm:px-8 px-4 py-6 bg-white shadow">
             <div class="marquee__line">
-                <img src="{{ asset('images/Intouch.svg') }}" alt="marquee" class="h-8">
+                <img src="{{ asset('images/InTouch.svg') }}" alt="marquee" class="h-8">
             </div>
             <div class="marquee__line">
                 <img src="{{ asset('images/Medium.svg') }}" alt="marquee" class="w-full h-8">
@@ -31,7 +31,7 @@
     </div>
     <div class="py-12">
         <div class="p-4 sm:p-8 bg-white shadow">
-            <h1 class="text-2xl font-bold mb-4">CBD for Every Goal: Shop by Benefit.</h1>
+            <h1 class="text-2xl font-bold mb-4">КБД для любой цели: выбирайте по выгоде.</h1>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 @foreach ($categories as $category)
                     <a href="{{ route('category.show', $category->slug) }}" class="bg-gray-100 max-w-[430px] h-[150px] p-4 bg-cover bg-center flex flex-col justify-end" style="background-image: url({{ $category->image }})">

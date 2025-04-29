@@ -6,15 +6,15 @@
             <div class="mb-4">
                 <form action="/subscribe" method="get" class="relative">
                     <input type="text" class="w-full h-[35px] rounded-full border-none bg-white pl-4 outline-none focus:border-none focus:ring-0" placeholder="Enter your email">
-                    <x-icon-arrow-long-right class="absolute right-4 top-1/2 -translate-y-1/2" />
+                    <x-icon-arrow-long-right class="w-6 h-6 fill-black stroke-black absolute right-4 top-1/2 -translate-y-1/2" />
                 </form>
             </div>
             <div class="flex items-center gap-4">
                 <div class="flex flex-col gap-4">
                     <div class="text-lg font-bold">{{ $footerMenu->name }}</div>
                     <div class="flex flex-col gap-4">
-                        @foreach ($footerMenu->items as $key => $item)
-                            <a href="{{ $item }}">{{ $key }}</a>
+                        @foreach ($footerMenu->items as $item)
+                            <a href="{{ $item['link'] }}">{{ $item['name'] }}</a>
                         @endforeach
                     </div>
                 </div>

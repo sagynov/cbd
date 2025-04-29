@@ -21,7 +21,6 @@ class Banner extends Model
 
     public function getImageAttribute($value)
     {
-        return $value;
-        // return asset('storage/' . $value);
+        return asset('storage/' . $value);
     }
 }

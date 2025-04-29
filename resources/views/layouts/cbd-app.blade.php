@@ -24,11 +24,11 @@
                         <x-application-logo />
                     </div>
                     <div class="flex items-center gap-4">
-                        <div class="flex items-center gap-4">
-                            @foreach ($mainMenu->items as $key => $item)
-                                <a href="{{ $item }}" class="text-gray-900 hover:text-gray-500">{{ $key }}</a>
-                            @endforeach
-                        </div>
+                        @foreach ($mainMenu->items as $item)
+                            <a href="{{ $item['link'] }}" class="text-gray-900 hover:text-gray-500">{{ $item['name'] }}</a>
+                        @endforeach
+                    </div>
+                    <div class="flex items-center gap-4">
                         <div>
                             <form action="/search" method="get" class="relative">
                                 <x-icon-search class="absolute left-4 top-1/2 -translate-y-1/2 stroke-gray-900 w-4 h-4" />
@@ -36,12 +36,10 @@
                             </form>
                         </div>
                         <div class="flex items-center gap-4">
-                            <a href="#">
-                                <x-icon-user class="stroke-gray-900 hover:stroke-gray-500" />
+                            <a href="{{ route('login') }}">
+                                <x-icon-user class="w-6 h-6 fill-none stroke-gray-900 hover:stroke-gray-500" />
                             </a>
-                            <a href="#" class="flex items-center gap-1 text-gray-900 hover:text-gray-500 group">
-                                <x-icon-bag class="stroke-gray-900 group-hover:stroke-gray-500" /> (2)
-                            </a>
+                            <x-cart />
                         </div>
                     </div>
                 </div>

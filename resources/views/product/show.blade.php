@@ -16,7 +16,7 @@
                                 <x-icon-star-half class="w-[15px] h-[15px]" />
                             </div>
                             <div>
-                                <span class="text-gray-900 text-sm underline cursor-pointer">663 Reviews</span>
+                                <span class="text-gray-900 text-sm underline cursor-pointer">{{ __('Reviews :count', ['count' => 663]) }}</span>
                             </div>
                         </div>
 
@@ -46,7 +46,7 @@
                             <button class="text-gray-900 px-4 py-2 absolute right-0">+</button>
                         </div>
                         <div class="w-2/3 sm:w-4/5">
-                            <x-cbd-button class="w-full">Add to Cart</x-cbd-button>
+                            <x-cbd-button class="w-full">{{ __('Add to cart') }}</x-cbd-button>
                         </div>
                     </div>
                     <div class="flex justify-between items-center gap-2 mb-4 p-4">
