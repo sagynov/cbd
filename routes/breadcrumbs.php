@@ -22,6 +22,6 @@ Breadcrumbs::for('category.show', function (BreadcrumbTrail $trail, Category $ca
 });
 
 Breadcrumbs::for('product.show', function (BreadcrumbTrail $trail, Product $product) {
-    $trail->parent('home');
+    $trail->parent('category.show', $product->category);
     $trail->push($product->name, route('product.show', $product));
 });

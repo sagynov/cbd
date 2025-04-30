@@ -10,12 +10,15 @@ class Category extends Model
 
     protected $fillable = ['name', 'title', 'slug', 'description', 'image'];
 
+    protected $appends = ['image_link'];
+
     public function getRouteKeyName()
     {
         return 'slug';
     }
-    public function getImageAttribute($value)
+    
+    public function getImageLinkAttribute()
     {
-        return asset('storage/' . $value);
+        return asset('storage/' . $this->image);
     }
 }

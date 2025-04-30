@@ -268,5 +268,14 @@
     "Category": "Категория",
     "Banners": "Баннеры",
     "Banner": "Баннер",
-    "Menus": "Меню"
+    "Menus": "Меню",
+    "Description": "Описание",
+    "Ingredients": "Ингредиенты",
+    "AS SEEN IN": "СМОТРЕЛИ В",
+    "Free shipping": "Бесплатная доставка",
+    "on orders <strong>:price</strong>": "на заказ <strong>:price</strong>",
+    "60 Days": "60 дней",
+    "Free Return": "Бесплатный возврат",
+    "Cancel": "Отменить",
+    "Anytime": "В любое время"
 }

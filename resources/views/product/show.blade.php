@@ -1,8 +1,8 @@
 <x-cbd-layout>
     <div class="py-12 px-4 sm:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
             <div class="col-span-1">
-                <img src="{{ $product->images[0] }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                <img src="{{ $product->image_links[0] }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
             </div>
             <div class="col-span-1">
                     {{ Breadcrumbs::render('product.show', $product) }}
@@ -53,22 +53,22 @@
                         <div class="flex sm:flex-row flex-col items-center justify-center gap-4">
                             <img src="{{ asset('images/egtegter.png') }}" alt="Truck" class="h-6 self-start sm:self-center">
                             <div class="flex flex-col">
-                                <div class="text-gray-900 font-bold text-sm">Free shipping</div>
-                                <span class="text-gray-900 text-sm">on orders <strong>$60</strong></span>
+                                <div class="text-gray-900 font-bold text-sm">{{ __('Free shipping') }}</div>
+                                <span class="text-gray-900 text-sm">{!! __('on orders <strong>:price</strong>', ['price' => '$60']) !!}</span>
                             </div>
                         </div>
                         <div class="flex sm:flex-row flex-col items-center justify-center gap-4">
                             <img src="{{ asset('images/erecrwref.png') }}" alt="Truck" class="h-6 self-start sm:self-center">
                             <div class="flex flex-col">
-                                <span class="text-gray-900 font-bold text-sm">60 Days</span>
-                                <span class="text-gray-900 text-sm">Free Return</span>
+                                <span class="text-gray-900 font-bold text-sm">{{ __('60 Days') }}</span>
+                                <span class="text-gray-900 text-sm">{{ __('Free Return') }}</span>
                             </div>
                         </div>
                         <div class="flex sm:flex-row flex-col items-center justify-center gap-4">
                             <img src="{{ asset('images/axdss.png') }}" alt="Truck" class="h-6 self-start sm:self-center">
                             <div class="flex flex-col">
-                                <span class="text-gray-900 font-bold text-sm">Cancel</span>
-                                <span class="text-gray-900 text-sm">Anytime</span>
+                                <span class="text-gray-900 font-bold text-sm">{{ __('Cancel') }}</span>
+                                <span class="text-gray-900 text-sm">{{ __('Anytime') }}</span>
                             </div>
                         </div>
                     </div>
@@ -76,5 +76,35 @@
                 </div>
             </div>
         </div>
+        <div class="bg-gray-200 py-8 flex flex-col mb-8">
+            <div class="text-center text-gray-900 font-bold text-lg uppercase">{{ __('AS SEEN IN') }}</div>
+            <div class="grid grid-cols-5 gap-4 sm:px-8 px-4 py-6">
+                <div class="marquee__line">
+                    <img src="{{ asset('images/InTouch.svg') }}" alt="marquee" class="h-8">
+                </div>
+                <div class="marquee__line">
+                    <img src="{{ asset('images/Medium.svg') }}" alt="marquee" class="w-full h-8">
+                </div>
+                <div class="marquee__line">
+                    <img src="{{ asset('images/NewBeauty.svg') }}" alt="marquee" class="h-8">
+                </div>
+                <div class="marquee__line">
+                    <img src="{{ asset('images/Forbes_Logo.svg') }}" alt="marquee" class="h-8">
+                </div>
+                <div class="marquee__line">
+                    <img src="{{ asset('images/USA_Today_Logo_2.svg') }}" alt="marquee" class="h-8">
+                </div>
+            </div>
+        </div>
+        <div class="py-12 px-4 sm:px-8">
+            <div class="flex border-b border-gray-400 gap-4">
+                <span class="text-gray-900 font-bold text-2xl capitalize cursor-pointer border-b-2 border-gray-900">{{ __('Description') }}</span>
+                <span class="text-gray-500 font-bold text-2xl capitalize cursor-pointer">{{ __('Ingredients') }}</span>
+            </div>
+            <div class="py-4">
+                <p class="text-gray-900">{{ $product->description }}</p>
+            </div>
+        </div>
+
     </div>
 </x-cbd-layout>

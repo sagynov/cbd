@@ -34,7 +34,7 @@
             <h1 class="text-2xl font-bold mb-4">КБД для любой цели: выбирайте по выгоде.</h1>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 @foreach ($categories as $category)
-                    <a href="{{ route('category.show', $category->slug) }}" class="bg-gray-100 max-w-[430px] h-[150px] p-4 bg-cover bg-center flex flex-col justify-end" style="background-image: url({{ $category->image }})">
+                    <a href="{{ route('category.show', $category->slug) }}" class="bg-gray-100 max-w-[430px] h-[150px] p-4 bg-cover bg-center flex flex-col justify-end" style="background-image: url({{ $category->image_link }})">
                         <div class="flex flex justify-between text-white items-center">
                             <h2 class="text-4xl capitalize">{{ $category->name }}</h2>
                             <div><x-icon-arrow-long-right class="w-10 h-10 stroke-white fill-white" /></div>

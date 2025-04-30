@@ -13,7 +13,8 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
-
+use Filament\Forms\Get;
+use Filament\Tables\Actions\EditAction;
 class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
@@ -42,8 +43,14 @@ class ProductResource extends Resource
                 Forms\Components\FileUpload::make('images')
                     ->label(__('fields.images'))
                     ->image()
-                    ->required()
-                    ->multiple(),
+                    ->multiple()
+                    ->reorderable()
+                    ->appendFiles()
+                    ->minFiles(2)
+                    ->panelLayout('grid')
+                    ->preserveFilenames()
+                    ->directory('products')
+                    ->required(fn (Get $get) => $get('images') == null),
                 Forms\Components\TextInput::make('name')
                     ->label(__('fields.name'))
                     ->required()

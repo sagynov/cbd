@@ -9,7 +9,7 @@
                         this.$el.addEventListener('mouseenter', () => this.isHovered = true);
                         this.$el.addEventListener('mouseleave', () => this.isHovered = false);
                     }
-                }" x-bind:src="isHovered ? '{{ $product->images[1] }}' : '{{ $product->images[0] }}'" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                }" x-bind:src="isHovered ? '{{ $product->image_links[1] }}' : '{{ $product->image_links[0] }}'" alt="{{ $product->name }}" class="w-full h-full object-cover">
             </a>
             <div class="px-4 flex flex-col gap-4">
                 <a href="{{ route('product.show', $product) }}">

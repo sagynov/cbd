@@ -11,16 +11,18 @@ class Product extends Model
     use HasFactory;
     protected $fillable = ['name', 'slug', 'description', 'images', 'category_id', 'price'];
 
+    protected $appends = ['image_links'];
+
     protected $casts = [
         'images' => 'array',
         'price' => 'integer',
     ];
 
-    public function getImagesAttribute($value)
+    public function getImageLinksAttribute()
     {
         return array_map(function ($image) {
             return asset('storage/' . $image);
-        }, json_decode($value, true));
+        }, $this->images);
     }
 
     public function getRouteKeyName()
