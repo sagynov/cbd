@@ -42,14 +42,50 @@
                         <div class="absolute top-2 right-4">
                             <button x-on:click="open = false">X</button>
                         </div>
-                        <div class="flex flex-col">
-                            <div class="font-bold text-md mb-2 uppercase">Strength:</div>
+                        <div class="flex flex-col" x-data="{
+                            @if ($product->has_variants)
+                            product: {{ collect($product)->toJson() }},
+                            variant: {{ collect($product->variants[0])->toJson() }},
+                            init() {
+                                this.select(this.variant);
+                            },
+                            select(variant) {
+                                this.variant = variant;
+                                this.product.id = '{{ $product->id }}' + '-' + variant.id;
+                                this.product.price = variant.price;
+                                this.product.name = '{{ $product->name }}' + ' - ' + variant.variant_value;
+                                this.product.image_links = variant.image_links;
+                            },
+                            isSelected(id) {
+                                return this.variant.id === id;
+                            },
+                            addItem()
+                            {
+                                $store.cart.addItem(this.product);
+                                this.product = {{ collect($product)->toJson() }};
+                                this.select(this.variant);
+                            }
+                            @else
+                            product: {{ collect($product)->toJson() }},
+                            addItem()
+                            {
+                                $store.cart.addItem(this.product);
+                            }
+                            @endif
+                        }">
+                            @if ($product->has_variants)
+                            <div class="font-bold text-md mb-2 uppercase">{{ $product->variant_name }}:</div>
                             <div class="flex flex-wrap items-center gap-2 mb-4">
-                                <span class="text-gray-900 px-4 py-2 bg-gray-100 rounded-full border border-black">{{ '1500MG' }}</span>
-                                <span class="text-gray-900 px-4 py-2 bg-white rounded-full border border-gray-200">{{ '3000MG' }}</span>
-                                <span class="text-gray-900 px-4 py-2 bg-white rounded-full border border-gray-200">{{ '6000MG' }}</span>
+                                @foreach ($product->variants as $variant)
+                                <button x-bind:class="{
+                                        'bg-gray-200': isSelected({{ $variant->id }}), 
+                                        'bg-white': !isSelected({{ $variant->id }})
+                                    }" class="text-gray-900 px-4 py-2 rounded-full border border-black cursor-pointer" 
+                                    x-on:click="select({{ collect($variant)->toJson() }})">{{ $variant->variant_value }}</button>
+                                @endforeach
                             </div>
-                            <x-cbd-button class="w-full">{{ __('Add to cart') }}</x-cbd-button>
+                            @endif
+                            <x-cbd-button class="w-full" x-on:click="addItem">{{ __('Add to cart') }}</x-cbd-button>
                         </div>
                     </div>
 

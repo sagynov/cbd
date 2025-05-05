@@ -2,7 +2,7 @@
     slides: [       
         @foreach ($items as $item)
         {
-            imgSrc: '{{ $item->image }}',
+            imgSrc: '{{ $item->image_link }}',
             imgAlt: '{{ $item->title }}',  
             title: '{{ $item->title }}',
             description: '{{ $item->description }}',    

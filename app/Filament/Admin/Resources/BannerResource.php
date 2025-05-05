@@ -39,13 +39,20 @@ class BannerResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('title')
+                    ->label(__('fields.title'))
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('description')
+                Forms\Components\Textarea::make('description')
+                    ->label(__('fields.description'))
                     ->required()
                     ->maxLength(255),
                 Forms\Components\FileUpload::make('image')
-                    ->required(),
+                    ->label(__('fields.image'))
+                    ->required()
+                    ->image()
+                    ->panelLayout('grid')
+                    ->preserveFilenames()
+                    ->directory('banners'),
                 Forms\Components\TextInput::make('button_text')
                     ->label(__('fields.button_text'))
                     ->required()
@@ -54,7 +61,7 @@ class BannerResource extends Resource
                     ->label(__('fields.button_link'))
                     ->required()
                     ->maxLength(255),
-            ]);
+            ])->columns(1);
     }
 
     public static function table(Table $table): Table

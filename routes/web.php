@@ -5,12 +5,14 @@ use App\Http\Controllers\MainController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [MainController::class, 'index'])->name('home');
 
 Route::resource('category', CategoryController::class);
 Route::resource('product', ProductController::class);
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

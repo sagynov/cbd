@@ -4,7 +4,40 @@
             <div class="col-span-1">
                 <img src="{{ $product->image_links[0] }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
             </div>
-            <div class="col-span-1">
+            <div class="col-span-1" x-data="{ 
+                quantity: 1,
+                @if ($product->has_variants)
+                    product: {{ collect($product)->toJson() }},
+                    variant: {{ collect($product->variants[0])->toJson() }},
+                    init() {
+                        this.select(this.variant);
+                    },
+                    select(variant) {
+                        this.variant = variant;
+                        this.product.id = '{{ $product->id }}' + '-' + variant.id;
+                        this.product.price = variant.price;
+                        this.product.name = '{{ $product->name }}' + ' - ' + variant.variant_value;
+                        this.product.image_links = variant.image_links;
+                    },
+                    isSelected(id) {
+                        return this.variant.id === id;
+                    },
+                    addItem()
+                    {
+                        this.product.quantity = this.quantity;
+                        $store.cart.addItem(this.product);
+                        this.product = {{ collect($product)->toJson() }};
+                        this.select(this.variant);
+                        this.quantity = 1;
+                    }
+                    @else
+                    product: {{ collect($product)->toJson() }},
+                    addItem()
+                    {
+                        $store.cart.addItem(this.product);
+                    }
+                    @endif
+            }">
                     {{ Breadcrumbs::render('product.show', $product) }}
                     <div class="py-4 mb-4 flex justify-between">
                         <div class="flex gap-2">
@@ -27,26 +60,32 @@
 
                     <h1 class="text-4xl capitalize font-bold mb-4">{{ $product->name }}</h1>
                     <p class="text-gray-900 mb-4">{{ $product->description }}</p>
-                    <div class="font-bold text-md mb-2 uppercase">Strength:</div>
+                    @if ($product->has_variants)
+                    <div class="font-bold text-md mb-2 uppercase">{{ $product->variant_name }}:</div>
                     <div class="flex items-center gap-2 mb-4">
-                        <span class="text-gray-900 px-4 py-2 bg-gray-100 rounded-full border border-black">{{ '1500MG' }}</span>
-                        <span class="text-gray-900 px-4 py-2 bg-white rounded-full border border-gray-200">{{ '3000MG' }}</span>
-                        <span class="text-gray-900 px-4 py-2 bg-white rounded-full border border-gray-200">{{ '6000MG' }}</span>
+                        @foreach ($product->variants as $variant)
+                        <button x-bind:class="{
+                                'bg-gray-200': isSelected({{ $variant->id }}), 
+                                'bg-white': !isSelected({{ $variant->id }})
+                            }" class="text-gray-900 px-4 py-2 rounded-full border border-black cursor-pointer" 
+                            x-on:click="select({{ collect($variant)->toJson() }})">{{ $variant->variant_value }}</button>
+                        @endforeach
                     </div>
+                    @endif
                     <div class="flex justify-between items-center gap-2 mb-4">
-                        <div class="text-gray-700 font-bold text-sm">SKU#: GUM-30-1530</div>
+                        <div class="text-gray-700 font-bold text-sm">SKU#: {{ $product->sku }}</div>
                         <div>
-                            <a href="#" class="text-gray-900 font-bold underline text-sm">Download Lab Results</a>
+                            <a href="#" class="text-gray-900 font-bold underline text-sm">{{ __('Download Lab Results') }}</a>
                         </div>
                     </div>
                     <div class="flex items-center gap-2 mb-4">
                         <div class="w-1/3 sm:w-1/5 flex items-center gap-2 relative">
-                            <button class="text-gray-900 px-4 py-2 absolute left-0">-</button>
-                            <input type="number" class="w-full p-2 rounded-full text-center border border-gray-200" placeholder="Quantity" value="1">
-                            <button class="text-gray-900 px-4 py-2 absolute right-0">+</button>
+                            <button class="text-gray-900 px-4 py-2 absolute left-0" x-on:click="quantity > 1 && quantity--">-</button>
+                            <input type="number" class="w-full p-2 rounded-full text-center border border-gray-200" placeholder="Quantity" x-model="quantity">
+                            <button class="text-gray-900 px-4 py-2 absolute right-0" x-on:click="quantity++">+</button>
                         </div>
                         <div class="w-2/3 sm:w-4/5">
-                            <x-cbd-button class="w-full">{{ __('Add to cart') }}</x-cbd-button>
+                            <x-cbd-button class="w-full" x-on:click="addItem">{{ __('Add to cart') }}</x-cbd-button>
                         </div>
                     </div>
                     <div class="flex justify-between items-center gap-2 mb-4 p-4">

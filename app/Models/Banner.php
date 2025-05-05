@@ -19,8 +19,8 @@ class Banner extends Model
         'is_active',
     ];
 
-    public function getImageAttribute($value)
+    public function getImageLinkAttribute()
     {
-        return asset('storage/' . $value);
+        return asset('storage/' . $this->image);
     }
 }

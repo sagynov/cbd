@@ -2,6 +2,7 @@
 
 namespace App\Filament\Admin\Resources;
 
+use App\Enums\ProductOption;
 use App\Filament\Admin\Resources\ProductResource\Pages;
 use App\Filament\Admin\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
@@ -40,17 +41,6 @@ class ProductResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\FileUpload::make('images')
-                    ->label(__('fields.images'))
-                    ->image()
-                    ->multiple()
-                    ->reorderable()
-                    ->appendFiles()
-                    ->minFiles(2)
-                    ->panelLayout('grid')
-                    ->preserveFilenames()
-                    ->directory('products')
-                    ->required(fn (Get $get) => $get('images') == null),
                 Forms\Components\TextInput::make('name')
                     ->label(__('fields.name'))
                     ->required()
@@ -63,11 +53,63 @@ class ProductResource extends Resource
                     ->label(__('fields.slug'))
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('description')
-                    ->label(__('fields.description'))
+                Forms\Components\Textarea::make('description')
+                    ->label(__('fields.description')),
+                Forms\Components\Toggle::make('is_active')
+                    ->label(__('fields.is_active'))
+                    ->default(true),
+                Forms\Components\Toggle::make('has_variants')
+                    ->label(__('fields.has_variants'))
+                    ->default(false)
+                    ->live(),
+                Forms\Components\TextInput::make('variant_name')
+                    ->label(__('fields.variant_name'))
                     ->required()
-                    ->maxLength(255),
+                    ->visible(fn (Get $get) => $get('has_variants'))
+                    ->default(__('Strength')),
+                Forms\Components\Repeater::make('variants')
+                    ->visible(fn (Get $get) => $get('has_variants'))
+                    ->label(__('fields.variants'))
+                    ->relationship('variants')
+                    ->schema([
+                        Forms\Components\TextInput::make('variant_value')
+                            ->label(__('fields.variant_value'))
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('price')
+                            ->label(__('fields.price'))
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('stock')
+                            ->label(__('fields.stock'))
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\FileUpload::make('images')
+                            ->label(__('fields.images'))
+                            ->required()
+                            ->image()
+                            ->multiple()
+                            ->reorderable()
+                            ->appendFiles()
+                            ->minFiles(2)
+                            ->panelLayout('grid')
+                            ->preserveFilenames()
+                            ->directory('products')
+                    ]),
+                Forms\Components\FileUpload::make('images')
+                ->visible(fn (Get $get) => !$get('has_variants'))
+                    ->label(__('fields.images'))
+                    ->image()
+                    ->multiple()
+                    ->reorderable()
+                    ->appendFiles()
+                    ->minFiles(2)
+                    ->panelLayout('grid')
+                    ->preserveFilenames()
+                    ->directory('products')
+                    ->required(),
                 Forms\Components\TextInput::make('price')
+                    ->visible(fn (Get $get) => !$get('has_variants'))
                     ->label(__('fields.price'))
                     ->required()
                     ->maxLength(255),
@@ -76,21 +118,20 @@ class ProductResource extends Resource
                     ->relationship('category', 'name')
                     ->required(),
                     
-            ]);
+            ])->columns(1);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('images')
+                Tables\Columns\ImageColumn::make('image_links')
                     ->label(__('fields.images')),
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('fields.name')),
-                Tables\Columns\TextColumn::make('slug')
-                    ->label(__('fields.slug')),
                 Tables\Columns\TextColumn::make('description')
-                    ->label(__('fields.description')),
+                    ->label(__('fields.description'))
+                    ->limit(50),
                 Tables\Columns\TextColumn::make('price')
                     ->label(__('fields.price')),
                 Tables\Columns\TextColumn::make('category.name')
@@ -107,6 +148,11 @@ class ProductResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->with('variants');
     }
 
     public static function getRelations(): array
