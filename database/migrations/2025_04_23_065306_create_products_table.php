@@ -14,11 +14,10 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('sku');
             $table->string('slug');
             $table->boolean('is_active')->default(true);
             $table->boolean('has_variants')->default(false);
-            $table->string('variant_name')->nullable(); //Strength, Flavor, etc.
+            $table->string('sku')->nullable();
             $table->decimal('price', 10, 2)->nullable();
             $table->decimal('old_price', 10, 2)->nullable();
             $table->integer('stock')->nullable();

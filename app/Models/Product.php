@@ -10,9 +10,9 @@ class Product extends Model
 {
     /** @use HasFactory<\Database\Factories\ProductFactory> */
     use HasFactory;
-    protected $fillable = ['name', 'sku', 'slug', 'is_active', 'has_variants', 'variant_name', 'description', 'images', 'category_id', 'price'];
+    protected $fillable = ['name', 'sku', 'slug', 'is_active', 'has_variants', 'description', 'images', 'category_id', 'price'];
 
-    protected $appends = ['image_links'];
+    protected $appends = ['image_links', 'flavor_variants', 'strength_variants'];
 
     protected $casts = [
         'images' => 'array',
@@ -31,6 +31,10 @@ class Product extends Model
     {
         return $this->variants->first()?->price ?? $this->price;
     }
+    public function getOldPriceAttribute()
+    {
+        return $this->variants->first()?->old_price ?? $this->old_price;
+    }
 
     public function getRouteKeyName()
     {
@@ -46,6 +50,17 @@ class Product extends Model
     {
         return $this->hasMany(ProductVariant::class);
     }
-    
+    public function getFlavorVariantsAttribute()
+    {
+        return $this->variants->filter(function ($variant) {
+            return $variant->flavor;
+        })->unique('flavor');
+    }
+    public function getStrengthVariantsAttribute()
+    {
+        return $this->variants->filter(function ($variant) {
+            return $variant->strength;
+        })->unique('strength');
+    }
 
 }

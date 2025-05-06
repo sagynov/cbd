@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('product_variants', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id');
+            $table->boolean('is_active')->default(true);
             $table->string('sku');
-            $table->string('variant_value'); //100mg, 200mg, 300mg
+            $table->string('flavor')->nullable();
+            $table->string('strength')->nullable();
             $table->json('images')->nullable();
             $table->decimal('price', 10, 2);
             $table->decimal('old_price', 10, 2)->nullable();

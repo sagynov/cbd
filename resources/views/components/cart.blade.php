@@ -10,13 +10,15 @@
         <div class="p-4 bg-white overflow-y-visible">
             <div class="flex flex-col gap-4" x-data>
                 <template x-for="item in $store.cart.items">
-                    <div class="grid grid-cols-5 gap-y-2 border-b p-2">
+                    <div class="grid grid-cols-5 gap-2 border-b p-2">
                     <div class="col-span-1">
                         <img x-bind:src="item.image_links[0]" />
                     </div>
                     <div class="col-span-3">
                         <div class="flex flex-col">
-                            <div class="font-bold mb-2" x-text="item.name"></div>
+                            <div class="font-bold" x-text="item.name"></div>
+                            <div class="text-sm font-bold text-gray-700 mb-1" x-show="item.flavor">{{ __('Flavor') }}: <span class="text-gray-500" x-text="item.flavor"></span></div>
+                            <div class="text-sm font-bold text-gray-700 mb-2" x-show="item.strength">{{ __('Strength') }}: <span class="text-gray-500" x-text="item.strength"></span></div>
                             <div class="flex items-center gap-2 relative w-24">
                                 <button class="text-gray-900 px-4 py-1 absolute left-0" x-on:click="item.quantity > 1 && item.quantity--">-</button>
                                 <input type="number" class="w-full p-1 rounded-full text-center border border-gray-200" placeholder="Quantity" x-model="item.quantity">

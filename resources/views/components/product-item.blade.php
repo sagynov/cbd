@@ -32,7 +32,7 @@
             </div>
             <div class="px-4 flex items-center gap-2">
                 <p class="text-lg font-bold">{{ Number::format($product->price).' ₸' }}</p>
-                <p class="text-gray-500 text-lg font-bold line-through">{{ Number::format($product->price).' ₸' }}</p>
+                <p class="text-gray-500 text-lg font-bold line-through">{{ Number::format($product->old_price).' ₸' }}</p>
             </div>
             <div class="flex justify-center py-4 px-4 relative">
                 <div class="w-full h-full" x-data="{
@@ -46,18 +46,28 @@
                             @if ($product->has_variants)
                             product: {{ collect($product)->toJson() }},
                             variant: {{ collect($product->variants[0])->toJson() }},
+                            flavor: {{ collect($product->variants[0]?->flavor)->toJson() }},
+                            strength: {{ collect($product->variants[0]?->strength)->toJson() }},
+
                             init() {
                                 this.select(this.variant);
                             },
                             select(variant) {
                                 this.variant = variant;
+                                this.flavor = variant.flavor;
+                                this.strength = variant.strength;
                                 this.product.id = '{{ $product->id }}' + '-' + variant.id;
                                 this.product.price = variant.price;
-                                this.product.name = '{{ $product->name }}' + ' - ' + variant.variant_value;
+                                this.product.name = '{{ $product->name }}';
                                 this.product.image_links = variant.image_links;
+                                this.product.flavor = variant.flavor;
+                                this.product.strength = variant.strength;
                             },
-                            isSelected(id) {
-                                return this.variant.id === id;
+                            isSelectedFlavor(flavor) {
+                                return this.flavor === flavor;
+                            },
+                            isSelectedStrength(strength) {
+                                return this.strength === strength;
                             },
                             addItem()
                             {
@@ -73,15 +83,27 @@
                             }
                             @endif
                         }">
-                            @if ($product->has_variants)
-                            <div class="font-bold text-md mb-2 uppercase">{{ $product->variant_name }}:</div>
+                            @if ($product->flavor_variants->count() > 0)
+                            <div class="font-bold text-md mb-2 uppercase">{{ __('Flavor') }}:</div>
                             <div class="flex flex-wrap items-center gap-2 mb-4">
-                                @foreach ($product->variants as $variant)
+                                @foreach ($product->flavor_variants as $variant)
                                 <button x-bind:class="{
-                                        'bg-gray-200': isSelected({{ $variant->id }}), 
-                                        'bg-white': !isSelected({{ $variant->id }})
+                                        'bg-gray-200': isSelectedFlavor('{{ $variant->flavor }}'), 
+                                        'bg-white': !isSelectedFlavor('{{ $variant->flavor }}')
                                     }" class="text-gray-900 px-4 py-2 rounded-full border border-black cursor-pointer" 
-                                    x-on:click="select({{ collect($variant)->toJson() }})">{{ $variant->variant_value }}</button>
+                                    x-on:click="select({{ collect($variant)->toJson() }})">{{ $variant->flavor }}</button>
+                                @endforeach
+                            </div>
+                            @endif
+                            @if ($product->strength_variants)
+                            <div class="font-bold text-md mb-2 uppercase">{{ __('Strength') }}:</div>
+                            <div class="flex flex-wrap items-center gap-2 mb-4">
+                                @foreach ($product->strength_variants as $variant)
+                                <button x-bind:class="{
+                                        'bg-gray-200': isSelectedStrength('{{ $variant->strength }}'), 
+                                        'bg-white': !isSelectedStrength('{{ $variant->strength }}')
+                                    }" class="text-gray-900 px-4 py-2 rounded-full border border-black cursor-pointer" 
+                                    x-on:click="select({{ collect($variant)->toJson() }})">{{ $variant->strength }}</button>
                                 @endforeach
                             </div>
                             @endif

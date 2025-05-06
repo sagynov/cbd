@@ -62,23 +62,30 @@ class ProductResource extends Resource
                     ->label(__('fields.has_variants'))
                     ->default(false)
                     ->live(),
-                Forms\Components\TextInput::make('variant_name')
-                    ->label(__('fields.variant_name'))
-                    ->required()
-                    ->visible(fn (Get $get) => $get('has_variants'))
-                    ->default(__('Strength')),
                 Forms\Components\Repeater::make('variants')
                     ->visible(fn (Get $get) => $get('has_variants'))
                     ->label(__('fields.variants'))
                     ->relationship('variants')
                     ->schema([
-                        Forms\Components\TextInput::make('variant_value')
-                            ->label(__('fields.variant_value'))
+                        Forms\Components\TextInput::make('sku')
+                            ->label(__('fields.sku'))
                             ->required()
+                            ->maxLength(255),
+                        Forms\Components\Toggle::make('is_active')
+                            ->label(__('fields.is_active'))
+                            ->default(true),
+                        Forms\Components\TextInput::make('flavor')
+                            ->label(__('fields.flavor'))
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('strength')
+                            ->label(__('fields.strength'))
                             ->maxLength(255),
                         Forms\Components\TextInput::make('price')
                             ->label(__('fields.price'))
                             ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('old_price')
+                            ->label(__('fields.old_price'))
                             ->maxLength(255),
                         Forms\Components\TextInput::make('stock')
                             ->label(__('fields.stock'))
@@ -96,6 +103,11 @@ class ProductResource extends Resource
                             ->preserveFilenames()
                             ->directory('products')
                     ]),
+                Forms\Components\TextInput::make('sku')
+                ->visible(fn (Get $get) => !$get('has_variants'))
+                    ->label(__('fields.sku'))
+                    ->required()
+                    ->maxLength(255),
                 Forms\Components\FileUpload::make('images')
                 ->visible(fn (Get $get) => !$get('has_variants'))
                     ->label(__('fields.images'))

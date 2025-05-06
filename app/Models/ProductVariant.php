@@ -14,8 +14,11 @@ class ProductVariant extends Model
     protected $fillable = [
         'product_id',
         'sku',
-        'variant_value',
+        'is_active',
+        'flavor',
+        'strength',
         'price',
+        'old_price',
         'stock',
         'images',
     ];
@@ -25,6 +28,7 @@ class ProductVariant extends Model
     protected $casts = [
         'images' => 'array',
         'price' => 'integer',
+        'old_price' => 'integer',
     ];
 
     public function getImageLinksAttribute()
