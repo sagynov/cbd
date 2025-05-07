@@ -20,8 +20,8 @@
         </div>
     </div>
     <div class="py-12">
-        <div class="p-4 sm:p-8">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="sm:p-8">
+        <div class="product-carousel">
             @foreach($products as $product)
                 <div class="bg-white">
                     <x-product-item :product="$product" />
@@ -29,6 +29,43 @@
             @endforeach
         </div>
     </div>
+    @push('custom-scripts')
+    <script>
+        $(document).ready(function(){
+            $('.product-carousel').slick({
+                dots: true,
+                infinite: true,
+                slidesToShow: 4,
+                slidesToScroll: 1,
+                responsive: [
+                    {
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 4,
+                        slidesToScroll: 1,
+                        infinite: true,
+                        dots: true
+                    }
+                    },
+                    {
+                    breakpoint: 600,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 1
+                    }
+                    },
+                    {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 1
+                    }
+                    }
+                ]
+            });
+        });
+    </script>
+    @endpush
     <div class="py-12">
         <div class="p-4 sm:p-8 bg-white shadow">
             <h1 class="text-2xl font-bold mb-4">КБД для любой цели: выбирайте по выгоде.</h1>

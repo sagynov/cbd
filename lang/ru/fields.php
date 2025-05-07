@@ -20,4 +20,5 @@ return [
     'variant_name' => 'Название выбора',
     'variant_value' => 'Значение выбора',
     'old_price' => 'Старая цена',
+    'sku' => 'SKU',
 ];

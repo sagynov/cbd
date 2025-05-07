@@ -1,5 +1,5 @@
 <div class="flex flex-col">
-    <div class="p-4 bg-gray-200 text-sm font-bold capitalize text-center rounded-t-2xl">{{ $product->category->name }}</div>
+    <div class="p-4 bg-gray-200 text-sm font-bold capitalize text-center rounded-t-2xl">{{ $product->category?->name }}</div>
     <div class="flex flex-col justify-between">
         <div class="flex flex-col gap-2 mb-8 bg-transparent">
             <a href="{{ route('product.show', $product) }}">
@@ -9,7 +9,7 @@
                         this.$el.addEventListener('mouseenter', () => this.isHovered = true);
                         this.$el.addEventListener('mouseleave', () => this.isHovered = false);
                     }
-                }" x-bind:src="isHovered ? '{{ $product->image_links[1] }}' : '{{ $product->image_links[0] }}'" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                }" x-bind:src="isHovered ? '{{ @$product->image_links[1] }}' : '{{ @$product->image_links[0] }}'" alt="{{ $product->name }}" class="w-full h-full object-cover">
             </a>
             <div class="px-4 flex flex-col gap-4">
                 <a href="{{ route('product.show', $product) }}">
@@ -17,8 +17,8 @@
                 </a>
             </div>
         </div>
-        <div class="flex flex-col gap-4">
-            <div class="px-4 flex items-center gap-2">
+        <div class="flex flex-col gap-4 h-full justify-between">
+            <div class="px-4 flex flex-wrap items-center gap-2">
                 <div class="flex items-center">
                     <x-icon-star-full class="w-[15px] h-[15px]" />
                     <x-icon-star-full class="w-[15px] h-[15px]" />
@@ -31,8 +31,14 @@
                 </div>
             </div>
             <div class="px-4 flex items-center gap-2">
-                <p class="text-lg font-bold">{{ Number::format($product->price).' ₸' }}</p>
-                <p class="text-gray-500 text-lg font-bold line-through">{{ Number::format($product->old_price).' ₸' }}</p>
+                @if($product->price)
+                <p class="sm:text-lg font-bold">{{ Number::format($product->price).' ₸' }}</p>
+                @endif
+                @if($product->old_price)
+                <p class="text-gray-500 sm:text-lg font-bold line-through">
+                    {{ Number::format($product->old_price).' ₸' }}
+                </p>
+                @endif
             </div>
             <div class="flex justify-center py-4 px-4 relative">
                 <div class="w-full h-full" x-data="{
@@ -107,11 +113,11 @@
                                 @endforeach
                             </div>
                             @endif
-                            <x-cbd-button class="w-full" x-on:click="addItem">{{ __('Add to cart') }}</x-cbd-button>
+                            <x-cbd-button class="w-full text-xs sm:text-base" x-on:click="addItem">{{ __('Add to cart') }}</x-cbd-button>
                         </div>
                     </div>
 
-                    <x-cbd-button class="w-full group flex items-center gap-1" x-on:click="open = true">{{ __('Add to cart') }} <x-icon-chevron-up class="w-4 h-4 fill-none stroke-black group-hover:stroke-white" /></x-cbd-button>
+                    <x-cbd-button class="w-full text-xs sm:text-base group flex items-center gap-1" x-on:click="open = true">{{ __('Add to cart') }} <x-icon-chevron-up class="w-4 h-4 fill-none stroke-black group-hover:stroke-white" /></x-cbd-button>
                 </div>
             </div>
         </div>

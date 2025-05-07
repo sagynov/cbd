@@ -12,6 +12,7 @@ class ProductVariant extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'product_id',
         'sku',
         'is_active',

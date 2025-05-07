@@ -21,4 +21,9 @@ class Category extends Model
     {
         return asset('storage/' . $this->image);
     }
+    
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'product_category');
+    }
 }

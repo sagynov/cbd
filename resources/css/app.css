@@ -27,3 +27,11 @@ svg.fill {
       @apply appearance-none;
     }
 }
+.slick-track
+{
+    @apply flex;
+}
+
+.slick-slide {
+    @apply mx-1 sm:mx-2;
+}

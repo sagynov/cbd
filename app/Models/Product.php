@@ -10,7 +10,7 @@ class Product extends Model
 {
     /** @use HasFactory<\Database\Factories\ProductFactory> */
     use HasFactory;
-    protected $fillable = ['name', 'sku', 'slug', 'is_active', 'has_variants', 'description', 'images', 'category_id', 'price'];
+    protected $fillable = ['id', 'name', 'type', 'sku', 'slug', 'is_active', 'has_variants', 'description', 'content', 'images', 'price', 'old_price'];
 
     protected $appends = ['image_links', 'flavor_variants', 'strength_variants'];
 
@@ -29,11 +29,11 @@ class Product extends Model
 
     public function getPriceAttribute()
     {
-        return $this->variants->first()?->price ?? $this->price;
+        return $this->variants->first()?->price ?? $this->price ?? null;
     }
     public function getOldPriceAttribute()
     {
-        return $this->variants->first()?->old_price ?? $this->old_price;
+        return $this->variants->first()?->old_price ?? $this->old_price ?? null;
     }
 
     public function getRouteKeyName()
@@ -41,9 +41,14 @@ class Product extends Model
         return 'slug';
     }
 
-    public function category()
+    public function getCategoryAttribute()
     {
-        return $this->belongsTo(Category::class);
+        return $this->categories->where('show_in_menu', true)->first();
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'product_category');
     }
 
     public function variants()
@@ -61,6 +66,10 @@ class Product extends Model
         return $this->variants->filter(function ($variant) {
             return $variant->strength;
         })->unique('strength');
+    }
+    public function reviews()
+    {
+        return $this->hasMany(ProductReview::class);
     }
 
 }

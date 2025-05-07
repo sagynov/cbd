@@ -75,10 +75,10 @@ class ProductResource extends Resource
                             ->label(__('fields.is_active'))
                             ->default(true),
                         Forms\Components\TextInput::make('flavor')
-                            ->label(__('fields.flavor'))
+                            ->label(__('Flavor'))
                             ->maxLength(255),
                         Forms\Components\TextInput::make('strength')
-                            ->label(__('fields.strength'))
+                            ->label(__('Strength'))
                             ->maxLength(255),
                         Forms\Components\TextInput::make('price')
                             ->label(__('fields.price'))
@@ -170,7 +170,7 @@ class ProductResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            // RelationManagers\ReviewsRelationManager::class,
         ];
     }
 

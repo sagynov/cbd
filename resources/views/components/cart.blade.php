@@ -1,5 +1,5 @@
 <div class="flex items-center gap-1" x-data="{ open: false }">
-    <div class="bg-white w-[500px] fixed top-2 right-0 shadow-lg" x-show="open" x-transition>
+    <div class="bg-white max-w-full sm:max-w-[500px] fixed top-2 right-0 shadow-lg" x-show="open" x-transition>
         <div class="relative">
             <div class="uppercase text-sm font-bold p-4">{{ __('Your cart') }}</div>
             <div class="absolute top-5 right-5">
