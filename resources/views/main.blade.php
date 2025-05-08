@@ -21,48 +21,34 @@
     </div>
     <div class="py-12">
         <div class="sm:p-8">
-        <div class="product-carousel">
-            @foreach($products as $product)
-                <div class="bg-white">
-                    <x-product-item :product="$product" />
-                </div>
-            @endforeach
+            <div class="owl-carousel owl-theme">
+                @foreach($products as $product)
+                    <div class="bg-white h-full">
+                        <x-product-item :product="$product" />
+                    </div>
+                @endforeach
+            </div>
         </div>
     </div>
     @push('custom-scripts')
     <script>
         $(document).ready(function(){
-            $('.product-carousel').slick({
-                dots: true,
-                infinite: true,
-                slidesToShow: 4,
-                slidesToScroll: 1,
-                responsive: [
-                    {
-                    breakpoint: 1024,
-                    settings: {
-                        slidesToShow: 4,
-                        slidesToScroll: 1,
-                        infinite: true,
-                        dots: true
-                    }
+            $('.owl-carousel').owlCarousel({
+                items: 4,
+                margin: 15,
+                loop: true,
+                responsive:{
+                    0:{
+                        items: 1
                     },
-                    {
-                    breakpoint: 600,
-                    settings: {
-                        slidesToShow: 3,
-                        slidesToScroll: 1
-                    }
+                    600:{
+                        items: 2
                     },
-                    {
-                    breakpoint: 480,
-                    settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 1
+                    1000:{
+                        items: 4
                     }
-                    }
-                ]
-            });
+                }
+            })
         });
     </script>
     @endpush

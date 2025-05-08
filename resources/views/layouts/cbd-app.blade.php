@@ -14,8 +14,8 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
-        <link rel="stylesheet" href="{{ asset('assets/slick/slick.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/slick/slick-theme.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/owlcarousel/owl.carousel.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/owlcarousel/owl.theme.default.min.css') }}">
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
@@ -25,7 +25,9 @@
                     <div>
                         <x-application-logo />
                     </div>
-                    <div class="items-center gap-4 hidden sm:flex">
+                    <div class="items-center gap-4 hidden sm:flex text-sm">
+                        <a href="#" class="bg-black text-white hover:bg-white border border-transparent hover:border-black hover:text-gray-900 py-2 px-4 rounded-full transition">{{ __('Shop best sellers') }}</a>
+                        <a href="#" class="bg-black text-white hover:bg-white border border-transparent hover:border-black hover:text-gray-900 py-2 px-4 rounded-full transition">{{ __('Shop all CBD') }}</a>
                         @foreach ($mainMenu->items as $item)
                             <a href="{{ $item['link'] }}" class="text-gray-900 hover:text-gray-500">{{ $item['name'] }}</a>
                         @endforeach
@@ -54,7 +56,7 @@
             @include('layouts.footer')
         </div>
         <script src="{{ asset('assets/jquery/jquery.js') }}"></script>
-        <script src="{{ asset('assets/slick/slick.js') }}"></script>
+        <script src="{{ asset('assets/owlcarousel/owl.carousel.min.js') }}"></script>
         @stack('custom-scripts')
     </body>
 </html>

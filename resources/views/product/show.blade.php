@@ -6,11 +6,33 @@
         }">
             <div>
                 <img x-bind:src="image" alt="{{ $product->name }}" class="w-full h-full object-cover">
-                <div class="flex items-center gap-2 mt-4 overflow-x-hidden">
+                <div class="mt-4 owl-carousel owl-theme">
                     @foreach ($product->image_links as $image)
-                    <img src="{{ $image }}" alt="{{ $product->name }}" class="h-16 w-16 object-cover rounded-full cursor-pointer" x-on:click="image = '{{ $image }}'">
+                    <div class="w-24 w-24 flex items-center justify-center">
+                        <img src="{{ $image }}" alt="{{ $product->name }}" x-bind:class="{'border border-black': image == '{{ $image }}'}" class="h-24 w-24 rounded-full object-cover  cursor-pointer" x-on:click="image = '{{ $image }}'">
+                    </div>
                     @endforeach
                 </div>
+                @push('custom-scripts')
+                <script>
+                    $(document).ready(function(){
+                        $('.owl-carousel').owlCarousel({
+                            items: 4,
+                            margin: 10,
+                            dots: false,
+                            nav: true,
+                            responsive: {
+                                0:{
+                                    items: 2
+                                },
+                                600:{
+                                    items: 4
+                                }
+                            }
+                        })
+                    });
+                </script>
+                @endpush
             </div>
             </div>
             <div class="col-span-1" x-data="{ 

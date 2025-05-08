@@ -1,6 +1,6 @@
 <div class="flex flex-col">
-    <div class="p-4 bg-gray-200 text-sm font-bold capitalize text-center rounded-t-2xl">{{ $product->category?->name }}</div>
-    <div class="flex flex-col justify-between">
+    <div class="p-4 min-h-14 bg-gray-200 text-sm font-bold capitalize text-center rounded-t-2xl">{{ $product->category?->name }}</div>
+    <div class="flex flex-col min-h-[570px] justify-between">
         <div class="flex flex-col gap-2 mb-8 bg-transparent">
             <a href="{{ route('product.show', $product) }}">
                 <img x-data="{
@@ -17,7 +17,7 @@
                 </a>
             </div>
         </div>
-        <div class="flex flex-col gap-4 h-full justify-between">
+        <div class="flex flex-col gap-4 justify-between">
             <div class="px-4 flex flex-wrap items-center gap-2">
                 <div class="flex items-center">
                     <x-icon-star-full class="w-[15px] h-[15px]" />
@@ -116,7 +116,6 @@
                             <x-cbd-button class="w-full text-xs sm:text-base" x-on:click="addItem">{{ __('Add to cart') }}</x-cbd-button>
                         </div>
                     </div>
-
                     <x-cbd-button class="w-full text-xs sm:text-base group flex items-center gap-1" x-on:click="open = true">{{ __('Add to cart') }} <x-icon-chevron-up class="w-4 h-4 fill-none stroke-black group-hover:stroke-white" /></x-cbd-button>
                 </div>
             </div>
