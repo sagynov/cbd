@@ -1,8 +1,17 @@
 <x-cbd-layout>
     <div class="py-12 px-4 sm:px-8">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-            <div class="col-span-1">
-                <img src="{{ $product->image_links[0] }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+            <div class="col-span-1" x-data="{
+            image: '{{ $product->image_links[0] }}'
+        }">
+            <div>
+                <img x-bind:src="image" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                <div class="flex items-center gap-2 mt-4 overflow-x-hidden">
+                    @foreach ($product->image_links as $image)
+                    <img src="{{ $image }}" alt="{{ $product->name }}" class="h-16 w-16 object-cover rounded-full cursor-pointer" x-on:click="image = '{{ $image }}'">
+                    @endforeach
+                </div>
+            </div>
             </div>
             <div class="col-span-1" x-data="{ 
                 quantity: 1,
@@ -69,7 +78,7 @@
                     </div>
 
                     <h1 class="text-4xl capitalize font-bold mb-4">{{ $product->name }}</h1>
-                    <p class="text-gray-900 mb-4">{{ $product->description }}</p>
+                    <p class="text-gray-900 mb-4">{!! /*$product->description*/ '' !!}</p>
                     @if ($product->flavor_variants->count() > 0)
                     <div class="font-bold text-md mb-2 uppercase">{{ __('Flavor') }}:</div>
                     <div class="flex flex-wrap items-center gap-2 mb-4">
@@ -163,7 +172,7 @@
                 <span class="text-gray-500 font-bold text-2xl capitalize cursor-pointer">{{ __('Ingredients') }}</span>
             </div>
             <div class="py-4">
-                <p class="text-gray-900">{{ $product->description }}</p>
+                <p class="text-gray-900">{!! $product->description !!}</p>
             </div>
         </div>
 

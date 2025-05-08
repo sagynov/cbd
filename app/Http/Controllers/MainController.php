@@ -12,8 +12,8 @@ class MainController extends Controller
 {
     public function index()
     {
-        $categories = Category::all();
-        $products = Product::all();
+        $categories = Category::where('show_in_menu', 1)->get();
+        $products = Product::where('is_active', 1)->limit(10)->get();
         $banners = Banner::all();
         return view('main', compact('categories', 'products', 'banners'));
     }

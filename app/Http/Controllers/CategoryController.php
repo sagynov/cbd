@@ -38,7 +38,9 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        $products = Product::where('category_id', $category->id)->get();
+        $products = Product::where('is_active', 1)->whereHas('categories', function($query)use($category){
+            $query->where('category_id', $category->id);
+        })->get();
         return view('category.show', compact('category', 'products'));
     }
 

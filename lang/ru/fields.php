@@ -21,4 +21,6 @@ return [
     'variant_value' => 'Значение выбора',
     'old_price' => 'Старая цена',
     'sku' => 'SKU',
+    'show_in_menu' => 'Показать в меню',
+    'content' => 'Контент',
 ];

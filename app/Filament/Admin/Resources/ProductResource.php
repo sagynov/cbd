@@ -53,8 +53,12 @@ class ProductResource extends Resource
                     ->label(__('fields.slug'))
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Textarea::make('description')
-                    ->label(__('fields.description')),
+                Forms\Components\RichEditor::make('description')
+                    ->label(__('fields.description'))
+                    ->fileAttachmentsDirectory('products/attachments'),
+                Forms\Components\RichEditor::make('content')
+                    ->label(__('fields.content'))
+                    ->fileAttachmentsDirectory('products/attachments'),
                 Forms\Components\Toggle::make('is_active')
                     ->label(__('fields.is_active'))
                     ->default(true),
@@ -62,54 +66,12 @@ class ProductResource extends Resource
                     ->label(__('fields.has_variants'))
                     ->default(false)
                     ->live(),
-                Forms\Components\Repeater::make('variants')
-                    ->visible(fn (Get $get) => $get('has_variants'))
-                    ->label(__('fields.variants'))
-                    ->relationship('variants')
-                    ->schema([
-                        Forms\Components\TextInput::make('sku')
-                            ->label(__('fields.sku'))
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\Toggle::make('is_active')
-                            ->label(__('fields.is_active'))
-                            ->default(true),
-                        Forms\Components\TextInput::make('flavor')
-                            ->label(__('Flavor'))
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('strength')
-                            ->label(__('Strength'))
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('price')
-                            ->label(__('fields.price'))
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('old_price')
-                            ->label(__('fields.old_price'))
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('stock')
-                            ->label(__('fields.stock'))
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\FileUpload::make('images')
-                            ->label(__('fields.images'))
-                            ->required()
-                            ->image()
-                            ->multiple()
-                            ->reorderable()
-                            ->appendFiles()
-                            ->minFiles(2)
-                            ->panelLayout('grid')
-                            ->preserveFilenames()
-                            ->directory('products')
-                    ]),
                 Forms\Components\TextInput::make('sku')
-                ->visible(fn (Get $get) => !$get('has_variants'))
+                    ->visible(fn (Get $get) => !$get('has_variants'))
                     ->label(__('fields.sku'))
                     ->required()
                     ->maxLength(255),
                 Forms\Components\FileUpload::make('images')
-                ->visible(fn (Get $get) => !$get('has_variants'))
                     ->label(__('fields.images'))
                     ->image()
                     ->multiple()
@@ -125,10 +87,15 @@ class ProductResource extends Resource
                     ->label(__('fields.price'))
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Select::make('category_id')
-                    ->label(__('fields.category'))
-                    ->relationship('category', 'name')
-                    ->required(),
+                Forms\Components\TextInput::make('old_price')
+                    ->visible(fn (Get $get) => !$get('has_variants'))
+                    ->label(__('fields.old_price'))
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('stock')
+                    ->visible(fn (Get $get) => !$get('has_variants'))
+                    ->label(__('fields.stock'))
+                    ->required()
+                    ->maxLength(255),
                     
             ])->columns(1);
     }
@@ -137,13 +104,11 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('image_links')
-                    ->label(__('fields.images')),
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('fields.name')),
-                Tables\Columns\TextColumn::make('description')
-                    ->label(__('fields.description'))
-                    ->limit(50),
+                Tables\Columns\ToggleColumn::make('is_active')
+                    ->label(__('fields.is_active'))
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('price')
                     ->label(__('fields.price')),
                 Tables\Columns\TextColumn::make('category.name')
@@ -153,6 +118,7 @@ class ProductResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -170,7 +136,7 @@ class ProductResource extends Resource
     public static function getRelations(): array
     {
         return [
-            // RelationManagers\ReviewsRelationManager::class,
+            RelationManagers\VariantsRelationManager::class,
         ];
     }
 
@@ -180,6 +146,7 @@ class ProductResource extends Resource
             'index' => Pages\ListProducts::route('/'),
             'create' => Pages\CreateProduct::route('/create'),
             'edit' => Pages\EditProduct::route('/{record}/edit'),
+            'view' => Pages\ViewProduct::route('/{record}'),
         ];
     }
 }

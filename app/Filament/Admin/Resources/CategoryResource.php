@@ -47,6 +47,9 @@ class CategoryResource extends Resource
                     ->afterStateUpdated(function ($state, $set) {
                         $set('slug', Str::slug($state));
                     }),
+                Forms\Components\Toggle::make('show_in_menu')
+                    ->label(__('fields.show_in_menu'))
+                    ->default(false),
                 Forms\Components\TextInput::make('title')
                     ->label(__('fields.title'))
                     ->required()
@@ -55,7 +58,7 @@ class CategoryResource extends Resource
                     ->label(__('fields.slug'))
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('description')
+                Forms\Components\Textarea::make('description')
                     ->label(__('fields.description'))
                     ->required()
                     ->maxLength(255),
@@ -75,6 +78,8 @@ class CategoryResource extends Resource
             ->columns([
                 Tables\Columns\ImageColumn::make('image')
                     ->label(__('fields.image')),
+                Tables\Columns\ToggleColumn::make('show_in_menu')
+                    ->label(__('fields.show_in_menu')),
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('fields.name')),
                 Tables\Columns\TextColumn::make('title')
