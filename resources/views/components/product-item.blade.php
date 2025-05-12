@@ -13,7 +13,7 @@
             </a>
             <div class="px-4 flex flex-col gap-4">
                 <a href="{{ route('product.show', $product) }}">
-                    <h2 class="text-lg capitalize">{{ $product->name }}</h2>
+                    <h2 class="text-lg capitalize">{{ Str::limit($product->name, 45) }}</h2>
                 </a>
             </div>
         </div>

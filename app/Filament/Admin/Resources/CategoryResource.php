@@ -68,7 +68,6 @@ class CategoryResource extends Resource
                     ->panelLayout('grid')
                     ->preserveFilenames()
                     ->directory('categories')
-                    ->required(fn (Get $get) => $get('image') == null),
             ]);
     }
 
