@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [MainController::class, 'index'])->name('home');
 
-Route::get('/parser/products', [ParserController::class, 'products']);
-Route::get('/parser', [ParserController::class, 'index']);
+// Route::get('/parser/products', [ParserController::class, 'products']);
+// Route::get('/parser', [ParserController::class, 'index']);
 
 Route::resource('category', CategoryController::class);
 Route::resource('product', ProductController::class);

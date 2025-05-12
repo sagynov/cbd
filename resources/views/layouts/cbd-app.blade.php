@@ -26,8 +26,8 @@
                         <x-application-logo />
                     </div>
                     <div class="items-center gap-4 hidden sm:flex text-sm">
-                        <a href="#" class="bg-black text-white hover:bg-white border border-transparent hover:border-black hover:text-gray-900 py-2 px-4 rounded-full transition">{{ __('Shop best sellers') }}</a>
-                        <a href="#" class="bg-black text-white hover:bg-white border border-transparent hover:border-black hover:text-gray-900 py-2 px-4 rounded-full transition">{{ __('Shop all CBD') }}</a>
+                        <a href="{{ route('category.show', ['category' => 'best-sellers']) }}" class="bg-black text-white hover:bg-white border border-transparent hover:border-black hover:text-gray-900 py-2 px-4 rounded-full transition">{{ __('Shop best sellers') }}</a>
+                        <a href="{{ route('product.index') }}" class="bg-black text-white hover:bg-white border border-transparent hover:border-black hover:text-gray-900 py-2 px-4 rounded-full transition">{{ __('Shop all CBD') }}</a>
                         @foreach ($mainMenu->items as $item)
                             <a href="{{ $item['link'] }}" class="text-gray-900 hover:text-gray-500">{{ $item['name'] }}</a>
                         @endforeach

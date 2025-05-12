@@ -25,3 +25,8 @@ Breadcrumbs::for('product.show', function (BreadcrumbTrail $trail, Product $prod
     $trail->parent('category.show', $product->category);
     $trail->push($product->name, route('product.show', $product));
 });
+
+Breadcrumbs::for('product.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push(__('Shop all CBD'), route('product.index'));
+});

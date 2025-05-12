@@ -41,6 +41,11 @@ class Product extends Model
         return 'slug';
     }
 
+    public function type()
+    {
+        return $this->belongsTo(ProductType::class, 'type', 'name');
+    }
+
     public function getCategoryAttribute()
     {
         return $this->categories->where('show_in_menu', true)->first();

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductType;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -12,7 +14,12 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::all();
+        $categories = Category::where('show_in_menu', true)->get();
+        $types = ProductType::withCount(['products' => function($query) {
+            $query->where('is_active', true);
+        }])->get();
+        return view('product.index', compact('products', 'categories', 'types'));
     }
 
     /**
@@ -36,6 +43,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+        
         return view('product.show', compact('product'));
     }
 

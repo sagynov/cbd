@@ -13,10 +13,11 @@ class CbdLayout extends Component
      */
     public function render(): View
     {
-        $menus = Menu::all();
+        $menus = Menu::whereIn('slug', ['main-menu', 'cbd-menu', 'sales-menu', 'legal-menu'])->get();
         $mainMenu = $menus->where('slug', 'main-menu')->first();    
-        $footerMenu = $menus->where('slug', 'footer-menu')->first();
-
-        return view('layouts.cbd-app', compact('mainMenu', 'footerMenu'));
+        $cbdMenu = $menus->where('slug', 'cbd-menu')->first();
+        $salesMenu = $menus->where('slug', 'sales-menu')->first();
+        $legalMenu = $menus->where('slug', 'legal-menu')->first();
+        return view('layouts.cbd-app', compact('mainMenu', 'cbdMenu', 'salesMenu', 'legalMenu'));
     }
 }
